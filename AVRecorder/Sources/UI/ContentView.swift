@@ -30,6 +30,14 @@ struct ContentView: View {
             .padding()
         }
         .frame(minWidth: 720, minHeight: 480)
+        .task {
+            await recorder.camera.requestAndStart()
+        }
+        .onAppear {
+            recorder.camera.videoSampleHandler = { [weak recorder] buffer, seconds in
+                recorder?.handleVideo(buffer, hostTimeSeconds: seconds)
+            }
+        }
         .sheet(isPresented: $isSettingsPresented) {
             SettingsSheet()
                 .environmentObject(settings)
@@ -59,14 +67,26 @@ struct ContentView: View {
     // MARK: - Content
 
     private var cameraPreview: some View {
-        CameraPreviewPlaceholder()
-            .frame(maxWidth: .infinity)
-            .aspectRatio(16.0 / 9.0, contentMode: .fit)
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .strokeBorder(Color.white.opacity(0.08), lineWidth: 1)
+        Group {
+            switch recorder.camera.permission {
+            case .granted:
+                CameraPreview(session: recorder.camera.session)
+            case .denied:
+                CameraAccessDenied {
+                    Task { await recorder.camera.requestAndStart() }
+                }
+            case .notDetermined:
+                CameraPreviewPlaceholder()
             }
+        }
+        .background(Color(red: 0.13, green: 0.14, blue: 0.17))
+        .frame(maxWidth: .infinity)
+        .aspectRatio(16.0 / 9.0, contentMode: .fit)
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .strokeBorder(Color.white.opacity(0.08), lineWidth: 1)
+        }
     }
 
     // MARK: - Transport

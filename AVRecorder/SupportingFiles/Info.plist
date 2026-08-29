@@ -28,6 +28,8 @@
 	<string>AV Recorder needs microphone access to capture system audio for your recordings.</string>
 	<key>NSSystemAudioRecordingUsageDescription</key>
 	<string>AV Recorder captures the system audio mix (for example your guitar processed through Neural DSP plus background music) so it can be recorded in sync with the video.</string>
+	<key>NSAudioCaptureUsageDescription</key>
+	<string>AV Recorder captures the system audio mix (for example your guitar processed through Neural DSP plus background music) so it can be recorded in sync with the video.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string></string>
 	<key>NSPrincipalClass</key>

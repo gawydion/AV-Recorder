@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Placeholder for the live camera preview (Phase 2 will replace this
-/// with an `NSViewRepresentable` wrapping an `AVCaptureVideoPreviewLayer`).
+/// Non-camera placeholder. Shown while permission is not yet granted;
+/// a real feed lives in `CameraPreview`.
 struct CameraPreviewPlaceholder: View {
     var body: some View {
         ZStack {

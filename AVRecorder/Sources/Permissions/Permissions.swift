@@ -1,8 +1,8 @@
 import Foundation
 import AppKit
+import AVFoundation
 
-/// Permission request scaffolding. Phase 2/3 will wire the real
-/// `AVCaptureDevice` / Core Audio Process Tap permission APIs.
+/// Camera and system-audio permission state.
 enum PermissionStatus: Equatable {
     case notDetermined
     case granted
@@ -11,11 +11,16 @@ enum PermissionStatus: Equatable {
 
 enum Permissions {
     static func cameraStatus() -> PermissionStatus {
-        .notDetermined
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized: return .granted
+        case .denied, .restricted: return .denied
+        case .notDetermined: return .notDetermined
+        @unknown default: return .notDetermined
+        }
     }
 
     static func requestCamera() async -> PermissionStatus {
-        .notDetermined
+        await AVCaptureDevice.requestAccess(for: .video) ? .granted : .denied
     }
 
     static func systemAudioStatus() -> PermissionStatus {

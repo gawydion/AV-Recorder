@@ -18,6 +18,10 @@
 		8A10000123F4A1B200AA0009 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0109 /* RecordButton.swift */; };
 		8A10000123F4A1B200AA000A /* StatusLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA010A /* StatusLabel.swift */; };
 		8A10000123F4A1B200AA000B /* Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA010B /* Permissions.swift */; };
+		8A10000123F4A1B200AA000C /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA010F /* CameraManager.swift */; };
+		8A10000123F4A1B200AA000D /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0110 /* CameraPreview.swift */; };
+		8A10000123F4A1B200AA000F /* RecordingEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0111 /* RecordingEngine.swift */; };
+		8A10000123F4A1B200AA0010 /* SystemAudioCapturer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0112 /* SystemAudioCapturer.swift */; };
 		8A10000123F4A1B200AA000E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA010E /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +41,10 @@
 		8A10000123F4A1B200AA010C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A10000123F4A1B200AA010D /* AVRecorder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AVRecorder.entitlements; sourceTree = "<group>"; };
 		8A10000123F4A1B200AA010E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA010F /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0110 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0111 /* RecordingEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingEngine.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0112 /* SystemAudioCapturer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAudioCapturer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				8A10000123F4A1B200AA0107 /* CameraPreviewPlaceholder.swift */,
+				8A10000123F4A1B200AA0110 /* CameraPreview.swift */,
 				8A10000123F4A1B200AA0108 /* LevelMeter.swift */,
 				8A10000123F4A1B200AA0109 /* RecordButton.swift */,
 				8A10000123F4A1B200AA010A /* StatusLabel.swift */,
@@ -132,6 +141,8 @@
 		8A10000123F4A1B200AA0415 /* Capture */ = {
 			isa = PBXGroup;
 			children = (
+				8A10000123F4A1B200AA010F /* CameraManager.swift */,
+				8A10000123F4A1B200AA0112 /* SystemAudioCapturer.swift */,
 			);
 			path = Sources/Capture;
 			sourceTree = "<group>";
@@ -139,6 +150,7 @@
 		8A10000123F4A1B200AA0416 /* Sync */ = {
 			isa = PBXGroup;
 			children = (
+				8A10000123F4A1B200AA0111 /* RecordingEngine.swift */,
 			);
 			path = Sources/Sync;
 			sourceTree = "<group>";
@@ -255,6 +267,10 @@
 				8A10000123F4A1B200AA0009 /* RecordButton.swift in Sources */,
 				8A10000123F4A1B200AA000A /* StatusLabel.swift in Sources */,
 				8A10000123F4A1B200AA000B /* Permissions.swift in Sources */,
+				8A10000123F4A1B200AA000C /* CameraManager.swift in Sources */,
+				8A10000123F4A1B200AA000D /* CameraPreview.swift in Sources */,
+				8A10000123F4A1B200AA000F /* RecordingEngine.swift in Sources */,
+				8A10000123F4A1B200AA0010 /* SystemAudioCapturer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
