@@ -1,0 +1,459 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8A10000123F4A1B200AA0001 /* AVRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0101 /* AVRecorderApp.swift */; };
+		8A10000123F4A1B200AA0002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0102 /* ContentView.swift */; };
+		8A10000123F4A1B200AA0003 /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0103 /* RecorderViewModel.swift */; };
+		8A10000123F4A1B200AA0004 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0104 /* AppSettings.swift */; };
+		8A10000123F4A1B200AA0005 /* AppSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0105 /* AppSettingsStore.swift */; };
+		8A10000123F4A1B200AA0006 /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0106 /* SettingsSheet.swift */; };
+		8A10000123F4A1B200AA0007 /* CameraPreviewPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0107 /* CameraPreviewPlaceholder.swift */; };
+		8A10000123F4A1B200AA0008 /* LevelMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0108 /* LevelMeter.swift */; };
+		8A10000123F4A1B200AA0009 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA0109 /* RecordButton.swift */; };
+		8A10000123F4A1B200AA000A /* StatusLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA010A /* StatusLabel.swift */; };
+		8A10000123F4A1B200AA000B /* Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA010B /* Permissions.swift */; };
+		8A10000123F4A1B200AA000E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A10000123F4A1B200AA010E /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8A10000123F4A1B200AA0200 /* AVRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A10000123F4A1B200AA0101 /* AVRecorderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVRecorderApp.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0102 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0103 /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0104 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0105 /* AppSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsStore.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0106 /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0107 /* CameraPreviewPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewPlaceholder.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0108 /* LevelMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMeter.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA0109 /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA010A /* StatusLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusLabel.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA010B /* Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permissions.swift; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA010C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA010D /* AVRecorder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AVRecorder.entitlements; sourceTree = "<group>"; };
+		8A10000123F4A1B200AA010E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8A10000123F4A1B200AA0300 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8A10000123F4A1B200AA0400 = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA0401 /* AVRecorder */,
+				8A10000123F4A1B200AA0402 /* AVRecorder.xcodeproj */,
+				8A10000123F4A1B200AA0403 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0403 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA0200 /* AVRecorder.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0401 /* AVRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA0410 /* App */,
+				8A10000123F4A1B200AA0411 /* UI */,
+				8A10000123F4A1B200AA0412 /* Views */,
+				8A10000123F4A1B200AA0413 /* ViewModels */,
+				8A10000123F4A1B200AA0414 /* Settings */,
+				8A10000123F4A1B200AA0415 /* Capture */,
+				8A10000123F4A1B200AA0416 /* Sync */,
+				8A10000123F4A1B200AA0417 /* Permissions */,
+				8A10000123F4A1B200AA0418 /* Resources */,
+				8A10000123F4A1B200AA0419 /* SupportingFiles */,
+			);
+			path = AVRecorder;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0410 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA0101 /* AVRecorderApp.swift */,
+			);
+			path = Sources/App;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0411 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA0102 /* ContentView.swift */,
+				8A10000123F4A1B200AA0106 /* SettingsSheet.swift */,
+			);
+			path = Sources/UI;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0412 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA0107 /* CameraPreviewPlaceholder.swift */,
+				8A10000123F4A1B200AA0108 /* LevelMeter.swift */,
+				8A10000123F4A1B200AA0109 /* RecordButton.swift */,
+				8A10000123F4A1B200AA010A /* StatusLabel.swift */,
+			);
+			path = Sources/Views;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0413 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA0103 /* RecorderViewModel.swift */,
+			);
+			path = Sources/ViewModels;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0414 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA0104 /* AppSettings.swift */,
+				8A10000123F4A1B200AA0105 /* AppSettingsStore.swift */,
+			);
+			path = Sources/Settings;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0415 /* Capture */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sources/Capture;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0416 /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sources/Sync;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0417 /* Permissions */ = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA010B /* Permissions.swift */,
+			);
+			path = Sources/Permissions;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0418 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA010E /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0419 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				8A10000123F4A1B200AA010C /* Info.plist */,
+				8A10000123F4A1B200AA010D /* AVRecorder.entitlements */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		8A10000123F4A1B200AA0402 /* AVRecorder.xcodeproj */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = .;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8A10000123F4A1B200AA0500 /* AVRecorder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A10000123F4A1B200AA0700 /* Build configuration list for PBXNativeTarget "AVRecorder" */;
+			buildPhases = (
+				8A10000123F4A1B200AA0600 /* Sources */,
+				8A10000123F4A1B200AA0300 /* Frameworks */,
+				8A10000123F4A1B200AA0601 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AVRecorder;
+			productName = AVRecorder;
+			productReference = 8A10000123F4A1B200AA0200 /* AVRecorder.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8A10000123F4A1B200AA0800 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					8A10000123F4A1B200AA0500 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 8A10000123F4A1B200AA0801 /* Build configuration list for PBXProject */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8A10000123F4A1B200AA0400;
+			productRefGroup = 8A10000123F4A1B200AA0403 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8A10000123F4A1B200AA0500 /* AVRecorder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8A10000123F4A1B200AA0601 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A10000123F4A1B200AA000E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8A10000123F4A1B200AA0600 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A10000123F4A1B200AA0001 /* AVRecorderApp.swift in Sources */,
+				8A10000123F4A1B200AA0002 /* ContentView.swift in Sources */,
+				8A10000123F4A1B200AA0003 /* RecorderViewModel.swift in Sources */,
+				8A10000123F4A1B200AA0004 /* AppSettings.swift in Sources */,
+				8A10000123F4A1B200AA0005 /* AppSettingsStore.swift in Sources */,
+				8A10000123F4A1B200AA0006 /* SettingsSheet.swift in Sources */,
+				8A10000123F4A1B200AA0007 /* CameraPreviewPlaceholder.swift in Sources */,
+				8A10000123F4A1B200AA0008 /* LevelMeter.swift in Sources */,
+				8A10000123F4A1B200AA0009 /* RecordButton.swift in Sources */,
+				8A10000123F4A1B200AA000A /* StatusLabel.swift in Sources */,
+				8A10000123F4A1B200AA000B /* Permissions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8A10000123F4A1B200AA0900 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGCHECK = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8A10000123F4A1B200AA0901 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGCHECK = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		8A10000123F4A1B200AA0902 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ASSETPACK_ALLOWED_DIRECTORIES = "";
+				CODE_SIGN_ENTITLEMENTS = AVRecorder/SupportingFiles/AVRecorder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AVRecorder/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.AVRecorder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8A10000123F4A1B200AA0903 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ASSETPACK_ALLOWED_DIRECTORIES = "";
+				CODE_SIGN_ENTITLEMENTS = AVRecorder/SupportingFiles/AVRecorder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AVRecorder/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.AVRecorder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8A10000123F4A1B200AA0801 /* Build configuration list for PBXProject */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A10000123F4A1B200AA0900 /* Debug */,
+				8A10000123F4A1B200AA0901 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A10000123F4A1B200AA0700 /* Build configuration list for PBXNativeTarget "AVRecorder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A10000123F4A1B200AA0902 /* Debug */,
+				8A10000123F4A1B200AA0903 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8A10000123F4A1B200AA0800 /* Project object */;
+}
