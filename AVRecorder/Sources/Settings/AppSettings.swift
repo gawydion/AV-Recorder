@@ -38,4 +38,5 @@ struct AppSettings: Equatable {
     var frameRate: FrameRate = .fps30
     var orientation: Orientation = .horizontal
     var savePath: String = AppSettings.defaultSavePath
+    var diff: Int = 3
 }

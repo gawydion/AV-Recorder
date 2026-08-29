@@ -13,6 +13,7 @@ final class AppSettingsStore: ObservableObject {
     private let frameRateKey = "settings.frameRate"
     private let orientationKey = "settings.orientation"
     private let savePathKey = "settings.savePath"
+    private let diffKey = "settings.diff"
 
     init() {
         var loaded = AppSettings()
@@ -33,6 +34,9 @@ final class AppSettingsStore: ObservableObject {
            path != AppSettings.legacySavePath {
             loaded.savePath = path
         }
+        if defaults.object(forKey: diffKey) != nil {
+            loaded.diff = min(max(defaults.integer(forKey: diffKey), 0), 100)
+        }
 
         settings = loaded
     }
@@ -42,5 +46,6 @@ final class AppSettingsStore: ObservableObject {
         defaults.set(settings.frameRate.rawValue, forKey: frameRateKey)
         defaults.set(settings.orientation.rawValue, forKey: orientationKey)
         defaults.set(settings.savePath, forKey: savePathKey)
+        defaults.set(settings.diff, forKey: diffKey)
     }
 }

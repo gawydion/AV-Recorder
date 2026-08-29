@@ -74,7 +74,12 @@ final class RecorderViewModel: ObservableObject {
                 AVVideoWidthKey: 1280,
                 AVVideoHeightKey: 720
             ]
-            try engine.startWriting(to: outputURL(), videoSettings: videoSettings, audioFormat: audioFormat)
+            try engine.startWriting(
+                to: outputURL(),
+                videoSettings: videoSettings,
+                audioFormat: audioFormat,
+                audioLeadMilliseconds: appSettings.settings.diff
+            )
         } catch {
             engine.cancel()
             print("Failed to start recording: \(error)")

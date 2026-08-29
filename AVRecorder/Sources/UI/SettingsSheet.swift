@@ -51,6 +51,11 @@ struct SettingsSheet: View {
                         .pickerStyle(.segmented)
                         .labelsHidden()
                     }
+                    settingRow("Diff") {
+                        TextField("0-100", value: diffBinding, format: .number)
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 80)
+                    }
                 }
                 .padding(12)
             }
@@ -92,6 +97,13 @@ struct SettingsSheet: View {
         }
         .padding(20)
         .frame(width: 540)
+    }
+
+    private var diffBinding: Binding<Int> {
+        Binding(
+            get: { store.settings.diff },
+            set: { store.settings.diff = min(max($0, 0), 100) }
+        )
     }
 
     private func settingRow(_ title: String, @ViewBuilder content: () -> some View) -> some View {
