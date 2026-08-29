@@ -55,30 +55,6 @@ struct SettingsSheet: View {
                 .padding(12)
             }
 
-            GroupBox("Audio") {
-                VStack(alignment: .leading, spacing: 14) {
-                    settingRow("Sample Rate") {
-                        Picker("Sample Rate", selection: $store.settings.sampleRate) {
-                            ForEach(SampleRate.allCases) { s in
-                                Text(String(format: "%.1f kHz", Double(s.rawValue) / 1000.0)).tag(s)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .labelsHidden()
-                    }
-                    settingRow("Audio Source") {
-                        Picker("Audio Source", selection: $store.settings.audioSource) {
-                            ForEach(AudioSource.allCases) { a in
-                                Text(a.rawValue == "global" ? "Global System Audio" : "Selected Processes").tag(a)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .labelsHidden()
-                    }
-                }
-                .padding(12)
-            }
-
             GroupBox("Save Location") {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 8) {

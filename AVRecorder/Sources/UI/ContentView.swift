@@ -14,7 +14,7 @@ struct ContentView: View {
             VStack(spacing: 18) {
                 header
                 cameraPreview
-                LevelMeter()
+                LevelMeter(level: recorder.audioLevel)
                     .frame(maxWidth: .infinity)
                 transportControls
             }

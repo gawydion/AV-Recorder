@@ -19,14 +19,6 @@ enum FrameRate: Int, CaseIterable, Identifiable {
     var id: Int { rawValue }
 }
 
-enum SampleRate: Int, CaseIterable, Identifiable {
-    case khz44_1 = 44100
-    case khz48 = 48000
-    case khz96 = 96000
-
-    var id: Int { rawValue }
-}
-
 enum Orientation: String, CaseIterable, Identifiable {
     case vertical
     case horizontal
@@ -34,21 +26,16 @@ enum Orientation: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-enum AudioSource: String, CaseIterable, Identifiable {
-    case global
-    case selectedProcesses
-
-    var id: String { rawValue }
-}
-
 // MARK: - Settings Model
 
 struct AppSettings: Equatable {
+    static let defaultSavePath = FileManager.default.homeDirectoryForCurrentUser
+        .appendingPathComponent("Desktop").path
+    static let legacySavePath = FileManager.default.homeDirectoryForCurrentUser
+        .appendingPathComponent("Movies/AVRecorder").path
+
     var resolution: Resolution = .hd1080p
     var frameRate: FrameRate = .fps30
-    var sampleRate: SampleRate = .khz48
     var orientation: Orientation = .horizontal
-    var audioSource: AudioSource = .global
-    var savePath: String = FileManager.default.homeDirectoryForCurrentUser
-        .appendingPathComponent("Movies/AVRecorder").path
+    var savePath: String = AppSettings.defaultSavePath
 }

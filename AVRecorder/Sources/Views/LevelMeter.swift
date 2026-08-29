@@ -1,16 +1,11 @@
 import SwiftUI
 
-/// Stereo (left/right) audio level meter driven by the Process Tap stream.
-/// Placeholder values for Phase 1; Phase 3 will feed real levels.
+/// Live system-audio level meter driven by the Process Tap stream.
 struct LevelMeter: View {
-    @State private var leftLevel: Double = 0.12
-    @State private var rightLevel: Double = 0.16
+    let level: Double
 
     var body: some View {
-        HStack(spacing: 6) {
-            MeterBar(level: leftLevel, color: .green)
-            MeterBar(level: rightLevel, color: .green)
-        }
+        MeterBar(level: level, color: .green)
     }
 }
 

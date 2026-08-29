@@ -32,11 +32,18 @@ enum RecordingState: Equatable {
 @MainActor
 final class RecorderViewModel: ObservableObject {
     @Published private(set) var state: RecordingState = .idle
+    @Published private(set) var audioLevel: Double = 0
     private(set) var lastRecordedURL: URL?
 
     let camera = CameraManager()
     private let engine = RecordingEngine()
     private let audioCapturer = SystemAudioCapturer()
+    private let appSettings: AppSettingsStore
+
+    init(appSettings: AppSettingsStore) {
+        self.appSettings = appSettings
+        startAudioMonitoring()
+    }
 
     var isRecording: Bool { state != .idle }
 
@@ -73,12 +80,7 @@ final class RecorderViewModel: ObservableObject {
     // MARK: - Recording control
 
     private func startRecording() {
-        var audioFormat: AudioFormatInfo?
-        do {
-            audioFormat = try audioCapturer.prepare()
-        } catch {
-            print("System audio unavailable, recording video only: \(error)")
-        }
+        let audioFormat = audioCapturer.availableFormat
 
         do {
             let videoSettings = camera.videoWriterSettings ?? [
@@ -86,23 +88,11 @@ final class RecorderViewModel: ObservableObject {
                 AVVideoWidthKey: 1280,
                 AVVideoHeightKey: 720
             ]
-            try engine.startWriting(to: Self.nextDesktopURL(), videoSettings: videoSettings, audioFormat: audioFormat)
+            try engine.startWriting(to: outputURL(), videoSettings: videoSettings, audioFormat: audioFormat)
         } catch {
-            audioCapturer.stop()
             engine.cancel()
             print("Failed to start recording: \(error)")
             return
-        }
-
-        if audioFormat != nil {
-            audioCapturer.onSampleBuffer = { [weak self] buffer in
-                self?.handleAudio(buffer)
-            }
-            do {
-                try audioCapturer.start()
-            } catch {
-                print("System audio failed to start, recording video only: \(error)")
-            }
         }
 
         state = .recording
@@ -123,7 +113,6 @@ final class RecorderViewModel: ObservableObject {
     func stop() {
         guard state != .idle else { return }
         state = .idle
-        audioCapturer.stop()
         engine.finish { [weak self] url in
             DispatchQueue.main.async {
                 self?.lastRecordedURL = url
@@ -133,11 +122,34 @@ final class RecorderViewModel: ObservableObject {
 
     // MARK: - Helpers
 
-    private static func nextDesktopURL() -> URL {
-        let desktop = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Desktop")
+    /// Prepares and starts the system-audio tap so the level meter is live at
+    /// all times. Recording reuses the same continuous tap and gates which
+    /// samples reach the writer via the engine's paused state.
+    private func startAudioMonitoring() {
+        do {
+            _ = try audioCapturer.prepare()
+            audioCapturer.onSampleBuffer = { [weak self] buffer in
+                DispatchQueue.main.async {
+                    self?.handleAudio(buffer)
+                }
+            }
+            audioCapturer.onLevel = { [weak self] level in
+                DispatchQueue.main.async {
+                    self?.audioLevel = level
+                }
+            }
+            try audioCapturer.start()
+        } catch {
+            print("System audio monitoring unavailable: \(error)")
+        }
+    }
+
+    private func outputURL() -> URL {
+        let folder = URL(fileURLWithPath: appSettings.settings.savePath)
+        try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd-HHmmss"
         let name = "AVRecorder-\(formatter.string(from: Date())).mov"
-        return desktop.appendingPathComponent(name)
+        return folder.appendingPathComponent(name)
     }
 }
