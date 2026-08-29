@@ -32,6 +32,10 @@ final class RecordingEngine {
     // MARK: - Control (main thread)
 
     func startWriting(to url: URL, videoSettings: [String: Any], audioFormat: AudioFormatInfo?, videoCropRect: CGRect? = nil, audioLeadMilliseconds: Int = 0) throws {
+        // NOTE: AppSettings.resolution / AppSettings.frameRate are displayed in
+        // Settings UI but not wired here — the session is fixed at 720p and we
+        // use the camera's recommendedVideoSettingsForAssetWriter. Wire them here
+        // (override settings + reconfig the session) to make those controls real.
         let newWriter = try AVAssetWriter(outputURL: url, fileType: .mov)
 
         let newVideoInput = AVAssetWriterInput(mediaType: .video, outputSettings: videoSettings)
@@ -149,6 +153,9 @@ final class RecordingEngine {
 
     /// Crops a source sample buffer to `cropRect` (in source coordinates),
     /// drawing into a pooled buffer matching the vertical output dimensions.
+    /// Y (luma) is copied for every row; the chroma plane is half-res in both
+    /// axes (4:2:0), so it must be copied at half the row count and half the
+    /// X offset. BytesPerRow is preserved (no re-pack) — we copy full rows.
     private func crop(_ buffer: CMSampleBuffer, to cropRect: CGRect, from adaptor: AVAssetWriterInputPixelBufferAdaptor) -> CVPixelBuffer? {
         guard let src = CMSampleBufferGetImageBuffer(buffer) else { return nil }
         guard let pool = adaptor.pixelBufferPool else { return nil }
@@ -233,11 +240,14 @@ final class RecordingEngine {
 
     private func sessionTime(absoluteSeconds: Double) -> CMTime? {
         if let anchorSeconds {
+            // Normal case: shift every sample relative to the anchor, so both
+            // streams map onto one start-of-file clock starting at zero.
             let seconds = max(0, absoluteSeconds - anchorSeconds)
             return CMTime(value: CMTimeValue((seconds * 1_000_000).rounded()), timescale: Self.timescale)
         }
         guard let writer, writer.status == .writing, !sessionStarted else { return nil }
 
+        // First sample on either stream establishes the session's t=0 anchor.
         anchorSeconds = absoluteSeconds
         sessionStarted = true
         writer.startSession(atSourceTime: .zero)

@@ -120,6 +120,9 @@ private final class VideoOutputDelegate: NSObject, AVCaptureVideoDataOutputSampl
     var synchronizationClock: CMClock?
 
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        // Convert to host-time seconds so camera frames and system-audio
+        // samples share one clock. Without this, the two streams' PTSs come
+        // from unrelated timebases and can't be interleaved in sync.
         let seconds: Double
         if let synchronizationClock {
             let hostTime = CMSyncConvertTime(sampleBuffer.presentationTimeStamp, from: synchronizationClock, to: CMClockGetHostTimeClock())

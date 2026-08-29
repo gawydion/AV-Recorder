@@ -111,6 +111,10 @@ final class SystemAudioCapturer {
             formatDescription: formatDescription
         )
 
+        // The tap alone doesn't deliver audio; it must be wrapped in an
+        // aggregate device whose "tap list" references the tap's UUID. The
+        // private aggregate then creates the IO proc endpoint we read from.
+        // This aggregate device approach only works outside the sandbox.
         let aggregateDescription: [String: Any] = [
             kAudioAggregateDeviceNameKey: "AV Recorder System Audio Tap",
             kAudioAggregateDeviceUIDKey: UUID().uuidString,
@@ -186,6 +190,9 @@ final class SystemAudioCapturer {
         let byteSize = Int(inputData.pointee.mBuffers.mDataByteSize)
         guard byteSize > 0, let bytes = inputData.pointee.mBuffers.mData else { return }
 
+        // Real-time rule: NEVER allocate, block, or call back off this thread.
+        // We only memcpy the bytes + record the host time, then hand both off
+        // to drainQueue for all conversion/signaling.
         let data = Data(bytes: bytes, count: byteSize)
         let presentationSeconds = Self.hostSeconds(hostTime)
 
