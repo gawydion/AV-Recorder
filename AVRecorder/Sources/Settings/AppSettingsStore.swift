@@ -41,6 +41,15 @@ final class AppSettingsStore: ObservableObject {
         settings = loaded
     }
 
+    /// Updates the orientation with a hop off the current run-loop pass so
+    /// the `@Published` change isn't fired from inside a view update
+    /// (which SwiftUI flags as undefined behavior).
+    func setOrientation(_ value: Orientation) {
+        DispatchQueue.main.async { [weak self] in
+            self?.settings.orientation = value
+        }
+    }
+
     private func persist() {
         defaults.set(settings.resolution.rawValue, forKey: resolutionKey)
         defaults.set(settings.frameRate.rawValue, forKey: frameRateKey)

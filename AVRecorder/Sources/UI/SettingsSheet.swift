@@ -25,25 +25,19 @@ struct SettingsSheet: View {
             GroupBox("Video") {
                 VStack(alignment: .leading, spacing: 14) {
                     settingRow("Resolution") {
-                        Picker("Resolution", selection: $store.settings.resolution) {
-                            ForEach(Resolution.allCases) { r in
-                                Text(r.rawValue).tag(r)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .labelsHidden()
+                        Text(store.settings.resolution.rawValue)
+                            .font(.callout)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .foregroundStyle(.secondary)
                     }
                     settingRow("Frame Rate") {
-                        Picker("Frame Rate", selection: $store.settings.frameRate) {
-                            ForEach(FrameRate.allCases) { fps in
-                                Text("\(fps.rawValue) fps").tag(fps)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .labelsHidden()
+                        Text("\(store.settings.frameRate.rawValue) fps")
+                            .font(.callout)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .foregroundStyle(.secondary)
                     }
                     settingRow("Orientation") {
-                        Picker("Orientation", selection: $store.settings.orientation) {
+                        Picker("Orientation", selection: orientationBinding) {
                             ForEach(Orientation.allCases) { o in
                                 Text(o == .horizontal ? "Horizontal" : "Vertical").tag(o)
                             }
@@ -97,6 +91,13 @@ struct SettingsSheet: View {
         }
         .padding(20)
         .frame(width: 540)
+    }
+
+    private var orientationBinding: Binding<Orientation> {
+        Binding(
+            get: { store.settings.orientation },
+            set: { store.setOrientation($0) }
+        )
     }
 
     private var diffBinding: Binding<Int> {

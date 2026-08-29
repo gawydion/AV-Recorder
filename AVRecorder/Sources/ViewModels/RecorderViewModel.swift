@@ -67,6 +67,7 @@ final class RecorderViewModel: ObservableObject {
 
     private func startRecording() {
         let audioFormat = audioCapturer.availableFormat
+        camera.orientation = appSettings.settings.orientation
 
         do {
             let videoSettings = camera.videoWriterSettings ?? [
@@ -75,9 +76,10 @@ final class RecorderViewModel: ObservableObject {
                 AVVideoHeightKey: 720
             ]
             try engine.startWriting(
-                to: outputURL(),
+                to: temporaryURL(),
                 videoSettings: videoSettings,
                 audioFormat: audioFormat,
+                videoCropRect: camera.videoCropRect,
                 audioLeadMilliseconds: appSettings.settings.diff
             )
         } catch {
@@ -94,7 +96,8 @@ final class RecorderViewModel: ObservableObject {
         state = .idle
         engine.finish { [weak self] url in
             DispatchQueue.main.async {
-                self?.lastRecordedURL = url
+                guard let self else { return }
+                self.lastRecordedURL = self.moveToFinalLocation(tempURL: url)
             }
         }
     }
@@ -123,12 +126,23 @@ final class RecorderViewModel: ObservableObject {
         }
     }
 
-    private func outputURL() -> URL {
+    /// Writes to a neutral temp file first; the final end-timestamped filename
+    /// is only known once recording actually stops.
+    private func temporaryURL() -> URL {
         let folder = URL(fileURLWithPath: appSettings.settings.savePath)
         try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        return folder.appendingPathComponent("AVRecorder-\(UUID().uuidString).mov")
+    }
+
+    /// Renames the finished temp file to a final name stamped with the end of
+    /// the recording. Returns the final URL (or the temp URL if rename fails).
+    private func moveToFinalLocation(tempURL: URL?) -> URL? {
+        guard let tempURL else { return nil }
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd-HHmmss"
         let name = "AVRecorder-\(formatter.string(from: Date())).mov"
-        return folder.appendingPathComponent(name)
+        let finalURL = tempURL.deletingLastPathComponent().appendingPathComponent(name)
+        try? FileManager.default.moveItem(at: tempURL, to: finalURL)
+        return finalURL
     }
 }

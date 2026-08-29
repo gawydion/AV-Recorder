@@ -81,12 +81,17 @@ struct ContentView: View {
         }
         .background(Color(red: 0.13, green: 0.14, blue: 0.17))
         .frame(maxWidth: .infinity)
-        .aspectRatio(16.0 / 9.0, contentMode: .fit)
+        .aspectRatio(previewAspectRatio, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 14, style: .continuous)
                 .strokeBorder(Color.white.opacity(0.08), lineWidth: 1)
         }
+        .frame(maxHeight: 560)
+    }
+
+    private var previewAspectRatio: CGFloat {
+        settings.settings.orientation == .vertical ? 9.0 / 16.0 : 16.0 / 9.0
     }
 
     // MARK: - Transport

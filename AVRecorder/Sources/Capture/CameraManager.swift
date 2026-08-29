@@ -16,10 +16,38 @@ final class CameraManager: ObservableObject {
 
     var isAuthorized: Bool { permission == .granted }
 
+    /// Orientation of the captured/saved video. `.horizontal` keeps the full
+    /// landscape frame; `.vertical` crops the center to a 9:16 mobile frame
+    /// (keeping the natural, unrotated capture).
+    var orientation: Orientation = .horizontal
+
     /// Compression settings (codec + dimensions) recommended for the camera's
     /// active format, used to configure the `AVAssetWriterInput` at record time.
+    /// For vertical output the dimensions are width-cropped to a 9:16 frame so
+    /// the file is encoded portrait without rotating the source video.
     var videoWriterSettings: [String: Any]? {
-        videoDataOutput?.recommendedVideoSettingsForAssetWriter(writingTo: .mov)
+        guard var settings = videoDataOutput?.recommendedVideoSettingsForAssetWriter(writingTo: .mov) else { return nil }
+        if orientation == .vertical,
+           let width = settings[AVVideoWidthKey] as? Int,
+           let height = settings[AVVideoHeightKey] as? Int {
+            let cropWidth = max(1, Int(((Double(height) * 9.0) / 16.0).rounded()))
+            settings[AVVideoWidthKey] = min(cropWidth, width)
+            settings[AVVideoHeightKey] = height
+        }
+        return settings
+    }
+
+    /// Width and height of the vertical crop region in the source pixel buffer
+    /// coordinates (only relevant in vertical mode). The source stays
+    /// unrotated; we clip out the center 9:16 slice and encode that.
+    var videoCropRect: CGRect? {
+        guard orientation == .vertical,
+              let settings = videoDataOutput?.recommendedVideoSettingsForAssetWriter(writingTo: .mov),
+              let width = settings[AVVideoWidthKey] as? Int,
+              let height = settings[AVVideoHeightKey] as? Int,
+              width > 0, height > 0 else { return nil }
+        let cropWidth = Double(height) * 9.0 / 16.0
+        return CGRect(x: (Double(width) - cropWidth) / 2.0, y: 0, width: cropWidth, height: Double(height))
     }
 
     /// Receives each camera frame (plus its host-time-based second offset)

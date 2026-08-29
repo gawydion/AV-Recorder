@@ -1,5 +1,6 @@
 import AVFoundation
 import CoreMedia
+import CoreVideo
 import Foundation
 
 /// Muxes the camera video and tapped system audio into a single `.mov` file
@@ -18,23 +19,37 @@ final class RecordingEngine {
 
     private var writer: AVAssetWriter?
     private var videoInput: AVAssetWriterInput?
+    private var pixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor?
     private var audioInput: AVAssetWriterInput?
     private var anchorSeconds: Double?
     private var sessionStarted = false
     private var paused = true
     private var audioLeadSeconds: Double = 0
+    private var cropRect: CGRect?
 
     init() {}
 
     // MARK: - Control (main thread)
 
-    func startWriting(to url: URL, videoSettings: [String: Any], audioFormat: AudioFormatInfo?, audioLeadMilliseconds: Int = 0) throws {
+    func startWriting(to url: URL, videoSettings: [String: Any], audioFormat: AudioFormatInfo?, videoCropRect: CGRect? = nil, audioLeadMilliseconds: Int = 0) throws {
         let newWriter = try AVAssetWriter(outputURL: url, fileType: .mov)
 
         let newVideoInput = AVAssetWriterInput(mediaType: .video, outputSettings: videoSettings)
         newVideoInput.expectsMediaDataInRealTime = true
         if newWriter.canAdd(newVideoInput) {
             newWriter.add(newVideoInput)
+        }
+
+        var newAdaptor: AVAssetWriterInputPixelBufferAdaptor?
+        if videoCropRect != nil {
+            newAdaptor = AVAssetWriterInputPixelBufferAdaptor(
+                assetWriterInput: newVideoInput,
+                sourcePixelBufferAttributes: [
+                    kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange,
+                    kCVPixelBufferWidthKey as String: Int(videoCropRect!.width),
+                    kCVPixelBufferHeightKey as String: Int(videoCropRect!.height)
+                ]
+            )
         }
 
         var newAudioInput: AVAssetWriterInput?
@@ -60,10 +75,12 @@ final class RecordingEngine {
 
         writer = newWriter
         videoInput = newVideoInput
+        pixelBufferAdaptor = newAdaptor
         audioInput = newAudioInput
         anchorSeconds = nil
         sessionStarted = false
         audioLeadSeconds = Double(audioLeadMilliseconds) / 1000.0
+        cropRect = videoCropRect
         setPaused(false)
     }
 
@@ -119,10 +136,64 @@ final class RecordingEngine {
             guard self.isRecordingActive(),
                 let writer = self.writer, writer.status == .writing,
                 let input = self.videoInput, input.isReadyForMoreMediaData else { return }
-            guard let time = self.sessionTime(absoluteSeconds: hostTimeSeconds),
-                  let sample = self.retimed(buffer, at: time) else { return }
-            input.append(sample)
+            guard let time = self.sessionTime(absoluteSeconds: hostTimeSeconds) else { return }
+
+            if let adaptor = self.pixelBufferAdaptor, let cropRect = self.cropRect,
+               let destBuffer = self.crop(buffer, to: cropRect, from: adaptor) {
+                adaptor.append(destBuffer, withPresentationTime: time)
+            } else if let sample = self.retimed(buffer, at: time) {
+                input.append(sample)
+            }
         }
+    }
+
+    /// Crops a source sample buffer to `cropRect` (in source coordinates),
+    /// drawing into a pooled buffer matching the vertical output dimensions.
+    private func crop(_ buffer: CMSampleBuffer, to cropRect: CGRect, from adaptor: AVAssetWriterInputPixelBufferAdaptor) -> CVPixelBuffer? {
+        guard let src = CMSampleBufferGetImageBuffer(buffer) else { return nil }
+        guard let pool = adaptor.pixelBufferPool else { return nil }
+
+        var dest: CVPixelBuffer?
+        let status = CVPixelBufferPoolCreatePixelBuffer(nil, pool, &dest)
+        guard status == kCVReturnSuccess, let dest else { return nil }
+
+        CVPixelBufferLockBaseAddress(src, .readOnly)
+        CVPixelBufferLockBaseAddress(dest, [])
+        defer {
+            CVPixelBufferUnlockBaseAddress(src, .readOnly)
+            CVPixelBufferUnlockBaseAddress(dest, [])
+        }
+
+        guard let srcBase = CVPixelBufferGetBaseAddress(src),
+              let destBase = CVPixelBufferGetBaseAddress(dest) else { return nil }
+
+        let srcBytesPerRow = CVPixelBufferGetBytesPerRow(src)
+        let destBytesPerRow = CVPixelBufferGetBytesPerRow(dest)
+        let cropX = Int(cropRect.minX.rounded())
+        let cropWidth = Int(cropRect.width.rounded())
+        let copyHeight = Int(cropRect.height.rounded())
+
+        for row in 0..<copyHeight {
+            memcpy(destBase.advanced(by: row * destBytesPerRow),
+                   srcBase.advanced(by: row * srcBytesPerRow + cropX),
+                   cropWidth)
+        }
+
+        if let srcPlane1 = CVPixelBufferGetBaseAddressOfPlane(src, 1),
+           let destPlane1 = CVPixelBufferGetBaseAddressOfPlane(dest, 1) {
+            let srcBytesPerRow1 = CVPixelBufferGetBytesPerRowOfPlane(src, 1)
+            let destBytesPerRow1 = CVPixelBufferGetBytesPerRowOfPlane(dest, 1)
+            let halfHeight = copyHeight / 2
+            let halfCropWidth = cropWidth / 2
+            let srcOffset1 = cropX / 2
+            for row in 0..<halfHeight {
+                memcpy(destPlane1.advanced(by: row * destBytesPerRow1),
+                       srcPlane1.advanced(by: row * srcBytesPerRow1 + srcOffset1),
+                       halfCropWidth)
+            }
+        }
+
+        return dest
     }
 
     func handleAudio(_ buffer: CMSampleBuffer) {
@@ -190,10 +261,12 @@ final class RecordingEngine {
     private func reset() {
         writer = nil
         videoInput = nil
+        pixelBufferAdaptor = nil
         audioInput = nil
         anchorSeconds = nil
         sessionStarted = false
         audioLeadSeconds = 0
+        cropRect = nil
         setPaused(true)
     }
 }
