@@ -8,13 +8,11 @@ import CoreMedia
 enum RecordingState: Equatable {
     case idle
     case recording
-    case paused
 
     var label: String {
         switch self {
         case .idle: return "Idle"
         case .recording: return "Recording…"
-        case .paused: return "Paused"
         }
     }
 
@@ -22,7 +20,6 @@ enum RecordingState: Equatable {
         switch self {
         case .idle: return .secondary
         case .recording: return .red
-        case .paused: return .orange
         }
     }
 }
@@ -51,19 +48,8 @@ final class RecorderViewModel: ObservableObject {
         switch state {
         case .idle:
             startRecording()
-        case .recording, .paused:
-            stop()
-        }
-    }
-
-    func togglePause() {
-        switch state {
         case .recording:
-            pause()
-        case .paused:
-            resume()
-        case .idle:
-            break
+            stop()
         }
     }
 
@@ -98,18 +84,6 @@ final class RecorderViewModel: ObservableObject {
         state = .recording
     }
 
-    private func pause() {
-        guard state == .recording else { return }
-        state = .paused
-        engine.pause()
-    }
-
-    private func resume() {
-        guard state == .paused else { return }
-        state = .recording
-        engine.resume()
-    }
-
     func stop() {
         guard state != .idle else { return }
         state = .idle
@@ -123,8 +97,8 @@ final class RecorderViewModel: ObservableObject {
     // MARK: - Helpers
 
     /// Prepares and starts the system-audio tap so the level meter is live at
-    /// all times. Recording reuses the same continuous tap and gates which
-    /// samples reach the writer via the engine's paused state.
+    /// all times. Recording reuses the same continuous tap and lets the engine
+    /// gate which samples reach the writer.
     private func startAudioMonitoring() {
         do {
             _ = try audioCapturer.prepare()

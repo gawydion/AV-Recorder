@@ -96,9 +96,6 @@ struct ContentView: View {
             RecordButton(state: recorder.state) {
                 recorder.toggleRecoding()
             }
-            PauseButton(state: recorder.state) {
-                recorder.togglePause()
-            }
         }
     }
 }
